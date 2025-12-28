@@ -11,12 +11,16 @@ const Settings = () => {
     const goToPage = (page) => {
         switch (page) {
             case "":
-                navigate("/")
+                navigate("/");
                 break;
-            case "map":
-                navigate("/map", {
-                    state: {mode}
-                });
+                case "map":
+                    navigate("/map", {
+                        state: { mode },
+                    
+                    });
+                    break;
+                    default:
+            break;
         }
     };
 
@@ -59,7 +63,7 @@ const Settings = () => {
                         
                         <label>
                             <input type="radio"
-                                    name='LearningMode'
+                                    name='learningMode'
                                     id='both'
                                     value="both"
                                     checked={mode==='both'}

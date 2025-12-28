@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Footer from "../Footer/Footer";
 import "./Map.css";
 import ChinaSVGMap from "../ChinaSVGMap";
@@ -14,11 +14,11 @@ const Map = () => {
   const gameMode = location.state?.mode || "hanzi";
 
   const [displayMode, setDisplayMode] = useState(gameMode);
-  const [isRunning, setIsRunning] = useState(true);
+  const [isRunning] = useState(true);
 
   const [currentProvince, setCurrentProvince] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
-  const [feedback, setFeedback] = useState(null); // "correct" | "incorrect"
+  const [feedback, setFeedback] = useState(null); 
 
   const goTo = (page) => navigate(page);
 
@@ -34,18 +34,28 @@ const Map = () => {
     setDisplayMode(gameMode);
   }, [gameMode]);
 
+  const getRandomProvince = useCallback(() => {
+    let next;
+    do {
+      next = provinces[Math.floor(Math.random() * provinces.length)];
+    } while (next.id === currentProvince?.id);
+    
+    return next;
+  }, [currentProvince]);
 
-  useEffect(() => {
+
+useEffect(() => {
   if (feedback !== "correct") return;
 
   const timeout = setTimeout(() => {
     setCurrentProvince(getRandomProvince());
     setSelectedId(null);
     setFeedback(null);
-  }, 800); // delay so user sees "Correct!"
+  }, 800);
 
   return () => clearTimeout(timeout);
-}, [feedback]);
+}, [feedback, getRandomProvince]);
+
 
 
   const handleProvinceClick = (id) => {
@@ -73,14 +83,6 @@ const Map = () => {
     hanzi: "汉字",
     pinyin: "Pinyin",
     both: "汉字 + Pinyin",
-  };
-
-  const getRandomProvince = () => {
-    let next;
-    do {
-      next = provinces[Math.floor(Math.random() * provinces.length)];
-    } while (next.id === currentProvince?.id);
-    return next;
   };
 
   return (
