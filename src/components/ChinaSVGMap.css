@@ -1,0 +1,13 @@
+.china-map {
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+}
+
+.china-map path {
+  transition: fill 0.25s ease, stroke 0.25s ease;
+}
+
+.main-map {
+  min-height: 500px;
+}

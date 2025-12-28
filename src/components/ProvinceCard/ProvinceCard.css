@@ -1,0 +1,18 @@
+.province-card {
+    padding: 20px 32px;
+    border-radius: 12px;
+    background: #1e1e1e;
+    color: white;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.province-card .hanzi {
+    font-size: 36px;
+    font-weight: 600;
+}
+
+.province-card .pinyin {
+    font-size: 18px;
+    opacity: 0.8;
+}

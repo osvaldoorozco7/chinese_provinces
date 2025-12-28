@@ -1,0 +1,43 @@
+.home-container{
+    min-height: 100vh;
+    height: 100%;
+    width: 100%;
+}
+
+.home-content {
+    flex: 1;
+}
+
+
+.home-container > h1 {
+    padding: 0 0 0 0;
+    color: yellow;
+} 
+
+.home-map-container > img{
+    width: 20%;
+    padding: 1rem 0 0 0;
+}
+
+.home-text {
+    color: white;
+    align-items: center;
+    justify-content: center;
+    margin: 0 15rem 0 15rem;
+    text-align: start;
+}
+
+.home-list-style {
+    list-style: circle;
+    text-align: start;
+}
+
+.home-button {
+    padding: 1rem 5rem;
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.home-button:hover {
+    transform: scale(1.1);
+}

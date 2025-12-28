@@ -1,0 +1,11 @@
+.footer-main-container{
+    display: flex;
+    margin: 0 5rem 1rem 5rem;
+}
+
+.bcu-logo > img{
+    height: 4rem;
+}
+.author {
+    margin-left: auto;
+}
