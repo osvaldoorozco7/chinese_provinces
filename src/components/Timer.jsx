@@ -5,16 +5,12 @@ const Timer = ({isRunning, onFinish}) => {
     const [seconds, setSeconds] = useState(0);
 
     useEffect(() => {
-        let interval = null;
+        if (!isRunning) return;
 
-        if (isRunning) {
-            interval = setInterval(() => {
-                setSeconds((prev => prev + 1));
-            }, 1000);
-        } else if (!isRunning && seconds !== 0) {
-            clearInterval(interval);
-        }
-
+        const interval = setInterval(() => {
+            setSeconds((prev) => prev + 1);
+        }, 1000);
+        
         return () => clearInterval(interval);
     }, [isRunning]);
 
