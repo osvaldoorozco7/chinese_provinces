@@ -46,7 +46,6 @@ const Map = () => {
     return next;
   }, [currentProvince]);
 
-
 useEffect(() => {
   if (feedback !== "correct") return;
 
@@ -55,44 +54,45 @@ useEffect(() => {
     setFeedback(null);
     setAttempts(0);
     setWrongSelections([]);
-  }, 800);
+    setRevealCorrect(false);
+  }, 900);
 
   return () => clearTimeout(timeout);
-}, [feedback]);
-
-
-useEffect(() => {
-  if (feedback !== "correct") return;
-
-  const revealTimer = setTimeout(() => {
-    setRevealCorrect(true);
-  }, 400);
-
-  return () => clearTimeout(revealTimer);
-}, [feedback]);
+}, [feedback, getRandomProvince]);
 
 
 const handleProvinceClick = (id) => {
   if (!currentProvince || feedback === "correct") return;
 
   setAttempts((prev) => {
-    const nextAttempts = prev + 1;
+    const next = prev + 1;
 
+    
     if (id === currentProvince.id) {
-      setFeedback("correct");
-    } else {
-      setWrongSelections((prevWrong) =>
-        prevWrong.includes(id) ? prevWrong : [...prevWrong, id]
-      );
-
-      if (nextAttempts >= 3) {
+      if (next === 1) {
+        
+        setFeedback("correct");
+      } else {
+        
+        setRevealCorrect(true);
         setFeedback("correct");
       }
+      return next;
     }
 
-    return nextAttempts;
+    setWrongSelections((prevWrong) =>
+      prevWrong.includes(id) ? prevWrong : [...prevWrong, id]
+    );
+
+    if (next >= 3) {
+      setRevealCorrect(true);
+      setFeedback("correct");
+    }
+
+    return next;
   });
 };
+
 
 const provinceColors = {};
 
@@ -100,13 +100,20 @@ wrongSelections.forEach((id) => {
   provinceColors[id] = "#f44336";
 });
 
-if (feedback === "correct" && currentProvince) {
-  if (attempts === 1) {
+if (currentProvince) {
+  if (attempts === 1 && feedback === "correct") {
     provinceColors[currentProvince.id] = "#4caf50";
-  } else {
+  }
+
+  if (attempts === 2 && !revealCorrect) {
+    provinceColors[currentProvince.id] = "#fbc02d";
+  }
+
+  if (revealCorrect) {
     provinceColors[currentProvince.id] = "#4caf50";
   }
 }
+
 
 
   const modeLabelMap = {
