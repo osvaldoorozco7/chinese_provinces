@@ -37,15 +37,15 @@ const ChinaSVGMap = ({
         viewBox="0 0 800 600"
         className={`china-map ${className}`}
     >
-      <defs>
-        <style type="text/css">
-          {`
-            path:hover {
-              fill-opacity: 0.8;
-            }
-          `}
-        </style>
-      </defs>
+        <defs>
+            <style type="text/css">
+            {`
+                path:hover {
+                fill-opacity: 0.8;
+                }
+            `}
+            </style>
+        </defs>
 
         {renderProvince(
             "CN-34",

@@ -44,7 +44,7 @@ const navigate = useNavigate();
                 </ul>
             </div>
 
-            <button className='home-button' onClick={goToMap}>Go to learn!</button>
+            <button className='general-button' onClick={goToMap}>Go to learn!</button>
 
             <Footer/>
         </div>
