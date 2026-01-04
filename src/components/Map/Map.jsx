@@ -17,8 +17,11 @@ const Map = () => {
   const [isRunning] = useState(true);
 
   const [currentProvince, setCurrentProvince] = useState(null);
-  const [selectedId, setSelectedId] = useState(null);
   const [feedback, setFeedback] = useState(null); 
+
+  const [attempts, setAttempts] = useState(0);
+  const [wrongSelections, setWrongSelections] = useState([]);
+  const [revealCorrect, setRevealCorrect] = useState(false);
 
   const goTo = (page) => navigate(page);
 
@@ -49,35 +52,62 @@ useEffect(() => {
 
   const timeout = setTimeout(() => {
     setCurrentProvince(getRandomProvince());
-    setSelectedId(null);
     setFeedback(null);
+    setAttempts(0);
+    setWrongSelections([]);
   }, 800);
 
   return () => clearTimeout(timeout);
-}, [feedback, getRandomProvince]);
+}, [feedback]);
 
 
+useEffect(() => {
+  if (feedback !== "correct") return;
 
-  const handleProvinceClick = (id) => {
-    if (!currentProvince || feedback === "correct") return;
+  const revealTimer = setTimeout(() => {
+    setRevealCorrect(true);
+  }, 400);
 
-    setSelectedId(id);
+  return () => clearTimeout(revealTimer);
+}, [feedback]);
+
+
+const handleProvinceClick = (id) => {
+  if (!currentProvince || feedback === "correct") return;
+
+  setAttempts((prev) => {
+    const nextAttempts = prev + 1;
 
     if (id === currentProvince.id) {
       setFeedback("correct");
     } else {
-      setFeedback("incorrect");
+      setWrongSelections((prevWrong) =>
+        prevWrong.includes(id) ? prevWrong : [...prevWrong, id]
+      );
+
+      if (nextAttempts >= 3) {
+        setFeedback("correct");
+      }
     }
 
+    return nextAttempts;
+  });
+};
 
-  };
+const provinceColors = {};
 
+wrongSelections.forEach((id) => {
+  provinceColors[id] = "#f44336";
+});
 
-  const provinceColors = {};
-  if (selectedId && feedback) {
-    provinceColors[selectedId] =
-      feedback === "correct" ? "#4caf50" : "#f44336";
+if (feedback === "correct" && currentProvince) {
+  if (attempts === 1) {
+    provinceColors[currentProvince.id] = "#4caf50";
+  } else {
+    provinceColors[currentProvince.id] = "#4caf50";
   }
+}
+
 
   const modeLabelMap = {
     hanzi: "汉字",
@@ -104,8 +134,9 @@ useEffect(() => {
         </div>
 
         <div className="map-tools">
+
           <div className="map-mode">
-            <p>Mode: {modeLabelMap[displayMode]}</p>
+            <p>Game mode <br /> {modeLabelMap[displayMode]}</p>
           </div>
 
           <div className="timer">

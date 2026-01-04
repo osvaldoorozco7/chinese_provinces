@@ -36,12 +36,12 @@ body {
   color: #61dafb;
 }
 
-.normal-button {
-  height: 2rem;
-  width: 10rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
+.general-button {
+    padding: 1rem 5rem;
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease;
 }
 
+.general-button:hover {
+    transform: scale(1.1);
+}

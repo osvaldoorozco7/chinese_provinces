@@ -73,7 +73,7 @@ const Settings = () => {
                     </form>
                 </div>
 
-                <button className='settings-button' onClick={() => goToPage('map')}> Let's go!</button>
+                <button className='general-button' onClick={() => goToPage('map')}> Let's go!</button>
             </div>
 
             <Footer/>
