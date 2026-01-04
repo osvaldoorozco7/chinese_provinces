@@ -105,11 +105,11 @@ if (currentProvince) {
     provinceColors[currentProvince.id] = "#4caf50";
   }
 
-  if (attempts === 2 && !revealCorrect) {
+  if (attempts === 2 && feedback === "correct" && revealCorrect) {
     provinceColors[currentProvince.id] = "#fbc02d";
   }
 
-  if (revealCorrect) {
+  if (attempts >= 3) {
     provinceColors[currentProvince.id] = "#4caf50";
   }
 }
